@@ -6,3 +6,20 @@
 - na strictEqual smo stavili 5 === 6 sto nije istina
 - node --test baca exit code (1) jer 5 !== 6
 - GitHub Actions gleda samo exit kodove
+
+5. CI test SUCCESS
+- novi yml file sa sljedecim uslovima
+     1. ako je uspjesno uradi echo
+     2. ako faila uradi echo i anravno faila
+     3. always() uslov fakticki uvijek bude
+     4. ako se grana zove main uradi echo
+     5. ako je feature grana uradi echo
+
+- u ovom pokusaju
+    1. proslo je TRUE
+    2. failure FALSE
+    3. uvijek TRUE
+    4. grana main FALSE
+    5. grana feature/* TRUE
+
+- ono sto je FALSE nije se odradilo nego je skippano
