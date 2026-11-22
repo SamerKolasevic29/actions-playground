@@ -38,15 +38,15 @@ jobs:
         if: startsWith(github.ref_name, 'feature/')
         run: echo "Ovo je feature grana"
 
-    tolerated:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Pada ali je tolerisano
-          id: risky
-          continue-on-error: true
-          run: exit 1
+  tolerated:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pada ali je tolerisano
+        id: risky
+        continue-on-error: true
+        run: exit 1
 
-        - name: Ishod
-          run: |
-            echo "outcome: ${{ steps.risky.outcome }}"
-            echo "conclusion: ${{ steps.risky.conclusion }}"
+      - name: Ishod
+        run: |
+          echo "outcome: ${{ steps.risky.outcome }}"          
+          echo "conclusion: ${{ steps.risky.conclusion }}"
