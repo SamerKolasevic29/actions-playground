@@ -1,0 +1,46 @@
+# name: ime koje ce se pojavljivati u Actions tabu
+name: Playground
+
+# definisanje kada se pokrece
+# u ovom slucaju
+#   push bez filtera (na svaki push)
+#   workflow_dispatch (rucno pokretanje)
+on:
+  push:
+  workflow_dispatch:
+
+# skup koraka koji se izvrsavaju u jednom run-u
+jobs:
+  info:
+    # ovo znaci da se vrti na GitHub masini
+    runs-on: ubuntu-latest
+
+    # lista koraka
+    steps:
+      - uses: actions/checkout@v4
+
+      # definise naziv koraka u logu
+      - name: Contexts
+
+      #viselinijska shell naredba (ili vise njih, tacnije blok)
+        run: |
+          echo "Actor:  ${{ github.actor }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "SHA:    ${{ github.sha }}"
+          echo "Event:  ${{ github.evet_name }}"
+          echo "Runner:  ${{ runner.os }}"
+          hostname
+          whoami
+      
+      # pokreni akciju  
+      - uses: actions/setup-node@v4
+      # ulazni parametri akcije
+        with:
+          node-version: 22
+
+      - name: Test
+
+        # shell naredba (jednolinijska)
+        run: node --test
+
+        
