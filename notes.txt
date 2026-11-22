@@ -7,6 +7,8 @@
 - node --test baca exit code (1) jer 5 !== 6
 - GitHub Actions gleda samo exit kodove
 
+-------------------------------------------------------------------
+
 5. CI test SUCCESS
 - novi yml file sa sljedecim uslovima
      1. ako je uspjesno uradi echo
@@ -23,3 +25,18 @@
     5. grana feature/* TRUE
 
 - ono sto je FALSE nije se odradilo nego je skippano
+
+6. CI test SUCCESS
+-   1. proslo je TRUE
+    2. failure FALSE
+    3. uvijek TRUE
+    4. grana main FALSE
+    5. grana feature/* FALSE
+
+7. CI test SUCCESS
+    1- proslo je TRUE
+    2. failure FALSE
+    3. uvijek TRUE
+    4. grana main TRUE
+    5. grana feature/* FALSE
+
