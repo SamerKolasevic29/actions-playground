@@ -1,46 +1,52 @@
-# name: ime koje ce se pojavljivati u Actions tabu
 name: Playground
 
-# definisanje kada se pokrece
-# u ovom slucaju
-#   push bez filtera (na svaki push)
-#   workflow_dispatch (rucno pokretanje)
 on:
   push:
   workflow_dispatch:
 
-# skup koraka koji se izvrsavaju u jednom run-u
 jobs:
   info:
-    # ovo znaci da se vrti na GitHub masini
     runs-on: ubuntu-latest
-
-    # lista koraka
     steps:
       - uses: actions/checkout@v4
-
-      # definise naziv koraka u logu
-      - name: Contexts
-
-      #viselinijska shell naredba (ili vise njih, tacnije blok)
-        run: |
-          echo "Actor:  ${{ github.actor }}"
-          echo "Branch: ${{ github.ref_name }}"
-          echo "SHA:    ${{ github.sha }}"
-          echo "Event:  ${{ github.evet_name }}"
-          echo "Runner:  ${{ runner.os }}"
-          hostname
-          whoami
-      
-      # pokreni akciju  
       - uses: actions/setup-node@v4
-      # ulazni parametri akcije
         with:
           node-version: 22
 
       - name: Test
-
-        # shell naredba (jednolinijska)
+        id: tests
         run: node --test
 
-        
+      - name: samo ako je proslo
+        if: success()
+        run: echo "Testovi su prosli"
+
+      - name: Samo ako je palo
+        if: failure()
+        run: echo "Testovi su pali, ovo je else fakticki"
+
+      - name: Uvijek
+        if: always()
+        run: echo "Ishod testova je ${{ steps.tests.outcome }}"
+
+      - name: Samo na main
+        if: github.ref_name == 'main'
+        run: echo "Ovo ce se vidjeti samo na main grani"
+
+      - name: Samo na feature granama
+        # startsWith(ko_pocinje, kako_pocinje)
+        if: startsWith(github.ref_name, 'feature/')
+        run: echo "Ovo je feature grana"
+
+    tolerated:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Pada ali je tolerisano
+          id: risky
+          continue-on-error: true
+          run: exit 1
+
+        - name: Ishod
+          run: |
+            echo "outcome: ${{ steps.risky.outcome }}"
+            echo "conclusion: ${{ steps.risky.conclusion }}"

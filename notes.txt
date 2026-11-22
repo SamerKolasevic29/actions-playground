@@ -1,0 +1,8 @@
+1. 2. 3. CI test SUCCESS
+- mjesto gdje moze da pukne je assert u app.test.js 
+- sada je stajalo da je 5 === 6 i tu test prolazi jer CI zove node --test
+
+4. CI test FAILED
+- na strictEqual smo stavili 5 === 6 sto nije istina
+- node --test baca exit code (1) jer 5 !== 6
+- GitHub Actions gleda samo exit kodove
